@@ -18,9 +18,9 @@ public class BlogApplication {
 
         path("/api", () -> {
             path("/posts",() -> {
-                get("",(req,res) -> postService.get(),json());
-                post("",(req,res) -> postService.create(GSON.fromJson(req.body(),Post.class)),json());
-                get("/:id",(req,res) -> postService.get(req.params("id")),json());
+                get("",(req,res) -> postService.get(),GSON::toJson);
+                post("",(req,res) -> postService.create(GSON.fromJson(req.body(),Post.class)),GSON::toJson);
+                get("/:id",(req,res) -> postService.get(req.params("id")),GSON::toJson);
                 delete("/:id",(req,res) -> {
                     postService.delete(req.params("id"));
                     return null;
@@ -29,12 +29,6 @@ public class BlogApplication {
         });
     }
 
-    private static String toJson(Object object) {
-        return GSON.toJson(object);
-    }
 
-    private static ResponseTransformer json() {
-        return BlogApplication::toJson;
-    }
 
 }
