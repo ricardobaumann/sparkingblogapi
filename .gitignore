@@ -15,5 +15,3 @@ buildNumber.properties
 
 .idea/
 *.iml
-pom.xml
-src/
